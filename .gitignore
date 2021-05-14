@@ -1,2 +1,4 @@
-__pycache__
-fastapi-mongo
+__pycache__/
+*.py[cod]
+*$py.class
+fastapi-mongo/
