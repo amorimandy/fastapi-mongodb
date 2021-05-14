@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Body
 from fastapi.encoders import jsonable_encoder
 
-from app.server.database import (
+from app.server.student_db import (
     add_student,
     delete_student,
     retrieve_student,
@@ -15,17 +15,17 @@ from app.server.models.student import (
     UpdateStudentModel,
 )
 
-router = APIRouter()
+student_router = APIRouter()
 
 
-@router.post("/", response_description="Student data added into the database")
+@student_router.post("/", response_description="Student data added into the database")
 async def add_student_data(student: StudentSchema = Body(...)):
     student = jsonable_encoder(student)
     new_student = await add_student(student)
     return response_model(new_student, "Student added successfully.")
 
 
-@router.get("/", response_description="Students retrieved")
+@student_router.get("/", response_description="Students retrieved")
 async def get_students():
     students = await retrieve_students()
     if students:
@@ -33,7 +33,7 @@ async def get_students():
     return response_model(students, "Empty list returned")
 
 
-@router.get("/{id}", response_description="Student data retrieved")
+@student_router.get("/{id}", response_description="Student data retrieved")
 async def get_student_data(id):
     student = await retrieve_student(id)
     if student:
@@ -41,7 +41,7 @@ async def get_student_data(id):
     return error_response_model("An error occurred.", 404, "Student doesn't exist.")
 
 
-@router.put("/{id}")
+@student_router.put("/{id}")
 async def update_student_data(id: str, req: UpdateStudentModel = Body(...)):
     req = {k: v for k, v in req.dict().items() if v is not None}
     updated_student = await update_student(id, req)
@@ -57,7 +57,7 @@ async def update_student_data(id: str, req: UpdateStudentModel = Body(...)):
     )
 
 
-@router.delete("/{id}", response_description="Student data deleted from the database")
+@student_router.delete("/{id}", response_description="Student data deleted from the database")
 async def delete_student_data(id: str):
     deleted_student = await delete_student(id)
     if deleted_student:
