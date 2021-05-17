@@ -27,10 +27,10 @@ async def add_teacher_data(teacher: TeacherSchema = Body(...)):
 
 @teacher_router.get("/", response_description="Teachers retrieved")
 async def get_teachers():
-    teacher = await retrieve_teachers()
-    if teacher:
-        return response_model(teacher, "Teachers data retrieved successfully")
-    return response_model(teacher, "Empty list returned")
+    teachers = await retrieve_teachers()
+    if teachers:
+        return response_model(teachers, "Teachers data retrieved successfully")
+    return response_model(teachers, "Empty list returned")
 
 
 @teacher_router.get("/{id}", response_description="Teacher data retrieved")

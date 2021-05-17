@@ -1,4 +1,6 @@
-fastapi
-uvicorn
-pydantic[email]
+fastapi~=0.64.0
+uvicorn~=0.13.4
+pydantic[email]~=1.8.1
 motor==2.2.0
+
+pymongo~=3.11.4
